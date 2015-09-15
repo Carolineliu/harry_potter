@@ -1,0 +1,10 @@
+首先，有四个类，一个是bookInfo类，写的是书籍信息，有书名title和价钱price属性。
+另一个是BasketItem类，写的是购物篮中的一条信息，有书的信息，和这本书的数量。
+一个类是loadPromotions类，写的是折扣信息。
+还有一个是Basket类，addBasketItem方法是把一条条basketItem汇总成basketItems,
+有5本不同类型的书和三本不同类型的书，把他们拆成两组4本类型不同的书时，价钱会更实惠，所以有
+calculateDifferentBooksLength和getMoreDiscountCount方法。
+calculateDifferentBooksLength方法是计算可以组成多少种不同类型的书
+getMoreDiscountCount方法是有多少个3本不同类型的书和5本不同类型的书换成两组4本类型不同的书
+最后getMinPrice方法是计算买家需要支付最少的钱，根据有多少种不同类型的书，找到对应的折扣。相乘，
+再减去3本不同类型的书和5本不同类型的书-两组4本类型不同的书的差价*数量。
