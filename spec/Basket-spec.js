@@ -3,7 +3,7 @@ var Basket = require("../models/Basket.js");
 var BasketItem = require("../models/BasketItem.js");
 
 describe("Basket", function() {
-  describe("function addBasketItem", function() {
+  describe("function", function() {
     var basketItems;
 
     beforeEach(function() {

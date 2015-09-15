@@ -4,7 +4,7 @@ function Basket() {
   this.basketItems = [];
 }
 // 提问：如果我们可以一次性获取basketItems,
-//并把basketItems处理成我们想要的数据，那么不就只需要一个Basket类就可以。
+//并把basketItems处理成我们想要的数据，是不是只需要一个Basket类就可以。
 // function Basket(basketItems){
 //   this.basketItems=basketItems
 // }
@@ -30,7 +30,7 @@ Basket.prototype.calculateDifferentBooksLength = function(basketItems) {
     length = basketItems.filter(function(val) {
       return val.count > 0;
     }).length;
-    
+
     booksLength.push(length);
 
     basketItems.forEach(function(val) {
