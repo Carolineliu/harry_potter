@@ -2,7 +2,9 @@ var LoadPromotions = require("../models/LoadPromotions.js");
 
 describe("LoadPromotions", function() {
   describe("function", function() {
+    
     it("should get correct promotions information", function() {
+
       var loadPromotions = new LoadPromotions();
       var promotions = [{
         1: 1
@@ -17,7 +19,7 @@ describe("LoadPromotions", function() {
       }];
 
       expect(loadPromotions.getPromotions()).toEqual(promotions);
-      
+
     });
   });
 });

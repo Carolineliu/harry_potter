@@ -1,8 +1,11 @@
-var BookInfo=require("./BookInfo");
+var Book = require("./Book.js");
 
-function BasketItem(bookInfo,count) {
-  this.bookInfo=bookInfo;
-  this.count=count;
+function BasketItem(book, count) {
+  this.count = count;
+  this.getBook = function() {
+    return book;
+  };
+
 }
 
 module.exports = BasketItem;

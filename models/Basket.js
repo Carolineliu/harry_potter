@@ -1,28 +1,31 @@
-var LoadPromotions = require("./LoadPromotions.js");
+var Calculate = require("./Calculate.js");
 
 function Basket() {
   this.basketItems = [];
 }
-// 提问：如果我们可以一次性获取basketItems,
-//并把basketItems处理成我们想要的数据，是不是只需要一个Basket类就可以。
-// function Basket(basketItems){
-//   this.basketItems=basketItems
-// }
 
-Basket.prototype.addBasketItem = function(newBasketItem) {
+Basket.prototype.addBook = function(book) {
   var judge = 1;
+  var boos = {};
+
   this.basketItems.forEach(function(val) {
-    if (val.bookInfo.title === newBasketItem.bookInfo.title) {
-      val.count += newBasketItem.count;
+    if (val.title === book.getBook().title) {
+      val.count += book.count;
       judge = 0;
     }
   });
+
   if (judge) {
-    this.basketItems.push(newBasketItem);
+    this.basketItems.push({
+      title: book.getBook().title,
+      price: book.getBook().price,
+      count: book.count
+    });
   }
+
 };
 
-Basket.prototype.calculateDifferentBooksLength = function(basketItems) {
+Basket.prototype.countBooks = function(basketItems) {
   var booksLength = [];
   var length = basketItems.length;
 
@@ -37,12 +40,15 @@ Basket.prototype.calculateDifferentBooksLength = function(basketItems) {
       val.count--;
     });
   }
+
   return booksLength;
 };
 
-Basket.prototype.getMoreDiscountCount = function(booksLength) {
+
+Basket.prototype.getDiscountCount = function(booksLength) {
   var count1 = 0;
   var count2 = 0;
+
   booksLength.forEach(function(val) {
     if (val === 5) {
       count1++;
@@ -51,28 +57,46 @@ Basket.prototype.getMoreDiscountCount = function(booksLength) {
       count2++;
     }
   });
+
   if (count1 > 0 && count2 > 0) {
     return count1 < count2 ? count1 : count2;
   } else {
     return 0;
   }
+
 };
 
-Basket.prototype.getMinPrice = function(basketItems) {
-  var sameBasketItems = basketItems;
-  var booksLength = this.calculateDifferentBooksLength(sameBasketItems);
-  var count = this.getMoreDiscountCount(booksLength);
-  var price = 0;
-  var loadPromotions = new LoadPromotions().getPromotions();
-  booksLength.forEach(function(val) {
-    loadPromotions.forEach(function(infos) {
-      var info = Object.keys(infos)[0];
-      if (val == info) {
-        price += infos[info] * val * basketItems[0].bookInfo.price;
-      }
-    });
+
+Basket.prototype.getDiscountPrice = function(booksLength) {
+  var decreaseArray = [3, 5];
+  var addArray = [4, 4];
+  var beforePrice = 0;
+  var presentPrice = 0;
+  var calculate = new Calculate();
+  var count = this.getDiscountCount(booksLength);
+
+  decreaseArray.forEach(function(val) {
+    beforePrice += calculate.getPrice(val);
   });
-  price = price - count * 0.4;
+  addArray.forEach(function(val) {
+    presentPrice += calculate.getPrice(val);
+  });
+
+  return (beforePrice - presentPrice) * count;
+};
+
+
+Basket.prototype.getMinPrice = function(basketItems) {
+  var price = 0;
+  var calculate = new Calculate();
+  var booksLength = this.countBooks(basketItems);
+
+  booksLength.forEach(function(length) {
+    price += calculate.getPrice(length);
+  });
+
+  price = price - this.getDiscountPrice(booksLength);
+
   return parseFloat(price.toFixed(2));
 };
 

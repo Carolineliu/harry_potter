@@ -1,5 +1,4 @@
-function LoadPromotions() {
-}
+function LoadPromotions() {}
 
 LoadPromotions.prototype.getPromotions = function() {
   var promotions = [{
@@ -13,6 +12,7 @@ LoadPromotions.prototype.getPromotions = function() {
   }, {
     5: 0.75
   }];
+
   return promotions;
 };
 
